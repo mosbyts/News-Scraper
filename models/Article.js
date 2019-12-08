@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
 
-var Scheme = mongoose.Schema;
+var Schema = mongoose.Schema;
 
-var ArticleSchema = new Schema = {
+var ArticleSchema = new Schema ({
     headline: {
         type: String,
         required: true
@@ -15,7 +15,7 @@ var ArticleSchema = new Schema = {
         type: String,
         required: true
     }
-};
+});
 
 var Article = mongoose.model("Article", ArticleSchema);
 

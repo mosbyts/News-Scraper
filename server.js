@@ -35,6 +35,8 @@ app.get("/", function(req,res){
             .children("a")
             .attr("href");
     });
+
+    console.log(result);
     //Save article to News database
     db.News.create(result)
         .then(function(article){
@@ -49,5 +51,5 @@ app.get("/", function(req,res){
 
 //Start the server
 app.listen(PORT, function(){
-    console.log("App running on port" + PORT);
+    console.log("App running on port " + PORT);
 });
