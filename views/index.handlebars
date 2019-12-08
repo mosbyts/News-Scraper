@@ -1,0 +1,17 @@
+<h1>Latest News!</h1>
+
+<h2>News Without A Comment</h2>
+<ul>
+    {{#each Article}}
+        {{#unless Comment}}
+        {{/unless}}
+    {{/each}}
+</ul>
+
+<h2>News With A Comment</h2>
+<ul>
+    {{#each Article}}
+        {{#if Comment}}
+        {{/if}}
+    {{/each}}
+</ul>
