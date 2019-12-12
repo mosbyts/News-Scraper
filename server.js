@@ -14,39 +14,55 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static("public"));
 mongoose.connect("mongodb://localhost/News-Scraper", {useNewUrlParser: true});
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+mongoose.connect(MONGODB_URI);
 
 //Routes
 //GET route for main page to always display latest articles
-app.get("/", function(req,res){
+app.get("/scrape", function(req, res){
     //Grab article data using axios and cheerio
-    axios.get("https://www.cnn.com/").then(function(response){
+    axios.get("https://www.npr.org/sections/news/").then(function(response){
         var $ = cheerio.load(response.data);
     //Use specific article data
-    $("article h3").each(function(i, element){
+    $("article .item-info-wrap .item-info").each(function(i, element){
         var result = {};
 
         result.headline = $(this)
-            .children("h3")
+            .children("h2")
             .text();
-        result.image = $(this)
-            .children("img")
+        result.category = $(this)
+            .children("div")
+            .children("h3")
+            .children("a")
+            .text();
+        result.summary = $(this)
+            .children("p")
             .text();
         result.url = $(this)
+            .children("h2")
             .children("a")
             .attr("href");
-    });
+        console.log(result);
 
-    console.log(result);
     //Save article to News database
-    db.News.create(result)
-        .then(function(article){
-            console.log(article);
-        }).catch(function(err){
-            console.log(err);
-        });
-    
-    res.send("Latest news");
+    db.Article.create(result)
+    .then(function(article){
+        console.log(article);
+    }).catch(function(err){
+        console.log(err);
     });
+    });
+    res.send("Latest news grabbed");
+    });
+});
+
+app.get("/", function(req, res){
+    db.Article.find({})
+        .then(function(article){
+            res.json(article)
+        }).catch(function(err){
+            res.json(err);
+        });
 });
 
 //Start the server
