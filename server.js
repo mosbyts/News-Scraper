@@ -4,6 +4,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
+var exphbs = require("express-handlebars");
 var db = require("./models");
 
 //Initialize dependencies
@@ -13,6 +14,8 @@ app.use(logger("dev"));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static("public"));
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 mongoose.connect("mongodb://localhost/News-Scraper", {useNewUrlParser: true});
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 mongoose.connect(MONGODB_URI);
@@ -59,7 +62,7 @@ app.get("/scrape", function(req, res){
 app.get("/", function(req, res){
     db.Article.find({})
         .then(function(article){
-            res.json(article)
+            res.render("index.handlebars")
         }).catch(function(err){
             res.json(err);
         });
