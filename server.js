@@ -1,6 +1,7 @@
 //Dependencies//
 var express = require("express");
 var logger = require("morgan");
+var mongojs = require("mongo");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
@@ -62,7 +63,14 @@ app.get("/scrape", function(req, res){
 app.get("/", function(req, res){
     db.Article.find({})
         .then(function(article){
-            res.render("index.handlebars")
+            var newsObject = {
+                headline: article.headline,
+                category: article.category,
+                summary: article.summary,
+                url: article.url
+            };
+            console.log(newsObject);
+            res.render("index", newsObject)
         }).catch(function(err){
             res.json(err);
         });

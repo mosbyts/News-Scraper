@@ -2,16 +2,15 @@
 
 <h2>News Without A Comment</h2>
 <ul>
-    {{#each Article}}
-        {{#unless Comment}}
-        {{/unless}}
+    {{#each newsObject}}
+        {{headline}}
     {{/each}}
+    {{#each newsObject}}{{/each}}
+    {{#each newsObject.summary}}{{/each}}
+    {{#each newsObject.url}}{{/each}}
 </ul>
 
 <h2>News With A Comment</h2>
 <ul>
-    {{#each Article}}
-        {{#if Comment}}
-        {{/if}}
-    {{/each}}
+    {{#each Article}}{{/each}}
 </ul>

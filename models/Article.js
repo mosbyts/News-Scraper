@@ -7,6 +7,9 @@ var ArticleSchema = new Schema ({
         type: String,
         required: true
     },
+    category: {
+        type: String
+    },
     summary: {
         type: String,
         required: true
