@@ -46,14 +46,14 @@ app.get("/scrape", function(req, res){
             .children("h2")
             .children("a")
             .attr("href");
-        console.log(result);
+        console.log("News scraped!");
 
     //Save article to News database
     db.Article.create(result)
     .then(function(article){
-        console.log(article);
+        console.log("Information saved to database: " + article);
     }).catch(function(err){
-        console.log(err);
+        console.log("Error! " + err);
     });
     });
     res.send("Latest news grabbed");
@@ -63,14 +63,22 @@ app.get("/scrape", function(req, res){
 app.get("/", function(req, res){
     db.Article.find({})
         .then(function(article){
-            var newsObject = {
-                headline: article.headline,
-                category: article.category,
-                summary: article.summary,
-                url: article.url
-            };
-            console.log(newsObject);
-            res.render("index", newsObject)
+            var news = [];
+            for (let i=0; i<article.length; i++) {
+                let headline = article[i].headline;
+                let category = article[i].category;
+                let summary = article[i].summary;
+                let url = article[i].url;
+                news.push({
+                    headline: headline,
+                    category: category,
+                    summary: summary,
+                    url: url
+                });
+            }
+            console.log("SHOW ME NEWS:" + JSON.stringify(news));
+            console.log("Headlines: ******" + news[0].headline);
+            res.render("index", news);
         }).catch(function(err){
             res.json(err);
         });
