@@ -1,5 +1,9 @@
 // Grab the articles as a json
 $.getJSON("/", function(data) {
+  for (var i = 0; i < data.length; i++) {
+    $("#notes").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br><a" + data[i].link + "'> Notes </a>" + "</p>");
+  }
+});
 // Whenever someone clicks a p tag
   $(document).on("click", "h3", function() {
     // Empty the notes from the note section

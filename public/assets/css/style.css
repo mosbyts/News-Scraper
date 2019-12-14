@@ -1,6 +1,7 @@
 #header{
    background: lightblue;
    display: block;
+   margin-top: 0px;
    padding: 10px;
 }
 

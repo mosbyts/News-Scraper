@@ -14,7 +14,6 @@
     <h2>News Without A Comment:</h2>
         {{#each news}}
             {{#unless comment}}
-                {{> news/news-block comment=false}}
             {{/unless}}
             <div class="newsStory">
                 <h3>{{headline}}</h3>
@@ -29,13 +28,14 @@
     <h2>News With A Comment:</h2>
         {{#each news}}
             {{#if comment}}
-                {{> news/news-block comment=true}}
             {{/if}}
             <div class="newsStory">
                 <h3>{{headline}}</h3>
                 <h5>{{category}}</h5>
                 <h4>{{summary}}</h4>
                 <h6><a href={{url}}>{{url}}</a></h6>
+                <button class="delete-comment" data-id="{{this.id}}">X</button>
+                <h4>{{Comment}}</h4>
             </div>
         {{/each}}
 </div>
