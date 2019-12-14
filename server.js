@@ -9,7 +9,7 @@ var exphbs = require("express-handlebars");
 var db = require("./models");
 
 //Initialize dependencies
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 var app = express();
 app.use(logger("dev"));
 app.use(express.urlencoded({extended: true}));
@@ -19,10 +19,20 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 mongoose.connect("mongodb://localhost/News-Scraper", {useNewUrlParser: true});
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { userNewUrlParser: true });
 
 //Routes
 //GET route for main page to always display latest articles
+app.get("/", function(req, res){
+    db.Article.find({})
+        .then(function(article){
+            res.render("index", {news: article});
+        }).catch(function(err){
+            res.json(err);
+        });
+});
+
+//GET route to pull in news data
 app.get("/scrape", function(req, res){
     //Grab article data using axios and cheerio
     axios.get("https://www.npr.org/sections/news/").then(function(response){
@@ -52,17 +62,29 @@ app.get("/scrape", function(req, res){
     .then(function(article){
         console.log("Information saved to database: " + article);
     }).catch(function(err){
-        console.log("Error! " + err);
+        return res.json(err);
     });
     });
-    res.send("Latest news grabbed.");
+    res.send("Latest news grabbed, view it at '/'");
     });
 });
 
-app.get("/", function(req, res){
-    db.Article.find({})
-        .then(function(article){
-            res.render("index", {news: article});
+app.get("/:id", function(req, res){
+    db.Article.findOne({_id: req.params.id})
+        .populate("Comment")
+        .then(function(dbArticle){
+            res.json(dbArticle);
+        }).catch(function(err){
+            res.json(err);
+        });
+});
+
+app.post("/:id", function(req, res){
+    db.Article.create(req.body)
+        .then(function(dbComment){
+            return db.Article.findOneAndUpdate({_id: req.params.id}, {comment: dbComment._id}, {new: true});
+        }).then(function(dbArticle){
+            res.json(dbArticle);
         }).catch(function(err){
             res.json(err);
         });
