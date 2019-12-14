@@ -2,7 +2,12 @@
 
 <h2>News Without A Comment</h2>
 <ul>
-    {{#each news}}{{/each}}
+    {{#each news}}
+        <li>{{headline}}</li>
+        <li>{{category}}</li>
+        <li>{{summary}}</li>
+        <li>{{url}}</li>
+    {{/each}}
 </ul>
 
 <h2>News With A Comment</h2>
