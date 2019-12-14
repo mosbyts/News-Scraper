@@ -1,0 +1,46 @@
+#header{
+   background: lightblue;
+   display: block;
+   padding: 10px;
+}
+
+h5{
+    color: lightslategrey;
+}
+
+.newsStory{
+    border: solid thin lightslategray;
+    box-shadow: 5px 5px darkslategray;
+    display: block;
+    margin: 10px;
+    padding: 5px;
+}
+
+#noCommentDiv{
+    background: lightgreen;
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+#commentDiv{
+    background: lightsalmon;
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+#notesDiv{
+    background: rgb(255, 255, 100);
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+#footer{
+    background: lightblue;
+    display: block;
+    margin-bottom: 0px;
+    padding: 10px;
+    text-align: center;
+}

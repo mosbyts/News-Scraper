@@ -1,13 +1,48 @@
-<h1>Latest News!</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tianna's News Scraper</title>
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+	<script src="./assets/js/news.js"></script>
+</head>
+<h1 id="header">Latest News From NPR</h1>
 
-<h2>News Without A Comment</h2>
-<ul>
-    {{#each news}}
-        <li>{{headline}}</li>
-        <li>{{category}}</li>
-        <li>{{summary}}</li>
-        <li>{{url}}</li>
-    {{/each}}
-</ul>
+<div id="noCommentDiv">
+    <h2>News Without A Comment:</h2>
+        {{#each news}}
+            {{#unless comment}}
+                {{> news/news-block comment=false}}
+            {{/unless}}
+            <div class="newsStory">
+                <h3>{{headline}}</h3>
+                <h5>{{category}}</h5>
+                <h4>{{summary}}</h4>
+                <h6><a href={{url}}>{{url}}</a></h6>
+            </div>
+        {{/each}}
+</div>
 
-<h2>News With A Comment</h2>
+<div id="commentDiv">
+    <h2>News With A Comment:</h2>
+        {{#each news}}
+            {{#if comment}}
+                {{> news/news-block comment=true}}
+            {{/if}}
+            <div class="newsStory">
+                <h3>{{headline}}</h3>
+                <h5>{{category}}</h5>
+                <h4>{{summary}}</h4>
+                <h6><a href={{url}}>{{url}}</a></h6>
+            </div>
+        {{/each}}
+</div>
+
+<div id="notesDiv">
+    <h3>Notes:</h3>
+    <div id="notes"></div>
+</div>
+
+<h5 id="footer">Copyright 2019</h5>
