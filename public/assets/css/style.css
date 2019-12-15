@@ -17,28 +17,28 @@ h5{
     padding: 5px;
 }
 
-#noCommentDiv{
+#noCommentStoryDiv{
     background: lightgreen;
     display: block;
     margin-bottom: 10px;
     padding: 10px;
 }
 
-#commentDiv{
+#commentStoryDiv{
     background: lightsalmon;
     display: block;
     margin-bottom: 10px;
     padding: 10px;
 }
 
-#notesDiv{
+#commentsDiv{
     background: rgb(255, 255, 100);
     display: block;
     margin-bottom: 10px;
     padding: 10px;
 }
 
-#notes{
+#comments{
     display: block;
     margin: 10px;
     padding: 5px;
