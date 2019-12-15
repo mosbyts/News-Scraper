@@ -38,6 +38,12 @@ h5{
     padding: 10px;
 }
 
+#notes{
+    display: block;
+    margin: 10px;
+    padding: 5px;
+}
+
 #footer{
     background: lightblue;
     display: block;

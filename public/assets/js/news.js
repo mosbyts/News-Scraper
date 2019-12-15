@@ -1,16 +1,9 @@
-// Grab the articles as a json
-$.getJSON("/", function(data) {
-  for (var i = 0; i < data.length; i++) {
-    $("#notes").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br><a" + data[i].link + "'> Notes </a>" + "</p>");
-  }
-});
-// Whenever someone clicks a p tag
-  $(document).on("click", "h3", function() {
+// Whenever someone clicks a news div
+  $(document).on("click", ".newsStory", function() {
     // Empty the notes from the note section
     $("#notes").empty();
-    // Save the id from the p tag
+    // Save the id from the news div
     var thisId = $(this).attr("data-id");
-  
     // Now make an ajax call for the Article
     $.ajax({
       method: "GET",
@@ -18,9 +11,8 @@ $.getJSON("/", function(data) {
     })
       // With that done, add the note information to the page
       .then(function(data) {
-        console.log(data);
         // The title of the article
-        $("#notes").append("<h2>" + data.title + "</h2>");
+        $("#notes").append("<h3>" + data.headline + "</h3>");
         // An input to enter a new title
         $("#notes").append("<input id='titleinput' name='title' >");
         // A textarea to add a new note body
@@ -28,12 +20,12 @@ $.getJSON("/", function(data) {
         // A button to submit a new note, with the id of the article saved to it
         $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
   
-        // If there's a note in the article
-        if (data.note) {
+        // If there's a comment in the article
+        if (data.comment) {
           // Place the title of the note in the title input
-          $("#titleinput").val(data.note.title);
+          $("#titleinput").val(data.comment.title);
           // Place the body of the note in the body textarea
-          $("#bodyinput").val(data.note.body);
+          $("#bodyinput").val(data.comment.body);
         }
       });
   });
@@ -57,12 +49,14 @@ $.getJSON("/", function(data) {
       // With that done
       .then(function(data) {
         // Log the response
-        console.log(data);
+        console.log("Note title: " + data.title);
+        console.log("Note body: " + data.body);
         // Empty the notes section
-        $("#notes").empty();
+        //$("#notes").empty();
       });
   
     // Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
+
   });

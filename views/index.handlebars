@@ -15,10 +15,10 @@
         {{#each news}}
             {{#unless comment}}
             {{/unless}}
-            <div class="newsStory">
+            <div class="newsStory" data-id={{_id}}>
                 <h3>{{headline}}</h3>
                 <h5>{{category}}</h5>
-                <h4>{{summary}}</h4>
+                <p>{{summary}}</p>
                 <h6><a href={{url}}>{{url}}</a></h6>
             </div>
         {{/each}}
@@ -29,10 +29,10 @@
         {{#each news}}
             {{#if comment}}
             {{/if}}
-            <div class="newsStory">
+            <div class="newsStory" data-id={{_id}}>
                 <h3>{{headline}}</h3>
                 <h5>{{category}}</h5>
-                <h4>{{summary}}</h4>
+                <p>{{summary}}</p>
                 <h6><a href={{url}}>{{url}}</a></h6>
                 <button class="delete-comment" data-id="{{this.id}}">X</button>
                 <h4>{{Comment}}</h4>
